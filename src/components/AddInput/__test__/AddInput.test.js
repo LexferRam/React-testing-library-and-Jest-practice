@@ -56,4 +56,21 @@ describe("AddInput", () => {
         fireEvent.click(buttonElement)
         expect(inputElement.value).toBe("")
     });
+
+    it('test_add_todo_updates_state', () => {
+        const setTodos = jest.fn();
+        const todos = [];
+        render(<AddInput setTodos={setTodos} todos={todos} />);
+        const inputElement = screen.getByPlaceholderText(/Add a new task here.../i);
+        fireEvent.change(inputElement, { target: { value: 'New todo' } });
+        const buttonElement = screen.getByRole("button", { name: /Add/i});
+        fireEvent.click(buttonElement)
+        expect(setTodos).toHaveBeenCalledWith([
+            {
+                id: expect.any(String),
+                task: 'New todo',
+                completed: false
+            }
+        ]);
+    });
 })

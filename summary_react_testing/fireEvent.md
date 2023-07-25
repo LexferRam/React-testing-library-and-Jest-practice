@@ -1,0 +1,65 @@
+# FireEvent
+
+It allows simulating actions that the user performs on an element, such as clicking a button, writing text in a text field, selecting an element from a drop-down list, etc. your test should resemble how users interact with your code (component, page, etc.) as much as possible.
+
+```js
+// Click a button
+fireEvent.click(screen.getByPlaceholderText(/Add a new task here.../i))
+
+// Write text in a text field
+fireEvent.change(
+    screen.getByPlaceholderText(/Add a new task here.../i),
+     { target: { value: "Go Grocery Shopping" } }
+)
+
+```
+
+## Using Jest Function Mocks with React Testing Library
+
+```js
+    const handleClick = jest.fn()
+    const { getByText } = render(<Button onClick={handleClick}>Click Me</Button>)
+    fireEvent.click(getByText(/Click Me/i))
+    expect(handleClick).toHaveBeenCalledTimes(1)
+```
+
+## **Async Methods**
+
+Several utilities are provided for dealing with asynchronous code. These can be useful to wait for an element to appear or disappear in response to an event, user action, timeout, or Promise.The async methods return Promises, so be sure to use await.
+
+**findBy Queries**
+
+findBy methods are a combination of getBy queries and waitFor. findBy queries work when you expect an element to appear but the change to the DOM might not happen immediately.
+
+```js
+    const button = screen.getByRole('button', {name: 'Click Me'})
+    fireEvent.click(button)
+    await screen.findByText('Clicked once')
+    fireEvent.click(button)
+    await screen.findByText('Clicked twice')
+```
+
+**waitFor**
+
+When in need to wait for any period of time you can use waitFor, to wait for your expectations to pass. Returning a falsy condition is not sufficient to trigger a retry, the callback must throw an error in order to retry the condition.
+
+```js
+    // ...
+    // Wait until the callback does not throw an error. In this case, that means
+    // it'll wait until the mock function has been called once.
+    await waitFor(() => expect(mockAPI).toHaveBeenCalledTimes(1))
+    // ...
+```
+
+**waitForElementToBeRemoved**
+
+To wait for the removal of element(s) from the DOM you can use waitForElementToBeRemoved. The waitForElementToBeRemoved function is a small wrapper around the waitFor utility.
+
+```js
+    const el = document.querySelector('div.getOuttaHere')
+
+    waitForElementToBeRemoved(document.querySelector('div.getOuttaHere')).then(() =>
+        console.log('Element no longer in DOM'),
+    )
+```
+

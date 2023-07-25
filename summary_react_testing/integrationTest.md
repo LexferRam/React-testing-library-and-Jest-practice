@@ -1,3 +1,6 @@
+# Integration Test
+
+```js
 import { render, screen, fireEvent } from '@testing-library/react';
 import Todo from "../Todo"
 import { BrowserRouter } from "react-router-dom"
@@ -24,7 +27,7 @@ it('should be able to type into input', () => {
         <MockTodo />
     );
     addTask(["Go Grocery Shopping"])
-    const divElement = screen.getByText(/Go Grocery Shopping/i);
+    const divElement = screen.getByText(/Go Grocery Shopping/i); 
     expect(divElement).toBeInTheDocument()
 });
 
@@ -62,3 +65,27 @@ it("should render 3 tasks", () => {
     const divElements = screen.queryAllByTestId("task-container");
     expect(divElements.length).toBe(3)
 })
+```
+
+## Hooks de testing
+
+```ts
+beforeEach(() => {
+    // console.log("RUNS BEFORE EACH TEST")
+    jest.mock("../../../__mocks__/axios")
+})
+
+beforeAll(() => {
+    console.log("RUNS ONCE BEFORE ALL TESTS")
+})
+
+afterEach(() => {
+    console.log("RUNS AFTER EACH TEST")
+})
+
+afterAll(() => {
+    console.log("RUNS ONCE AFTER ALL TESTS")
+})
+```
+
+NOTA: si se usan dentro de un describe() los hooks solo seran aplicados a los bloques de test dentro de este
