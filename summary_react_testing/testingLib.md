@@ -1,8 +1,23 @@
 # React testing library.
 
-## What is React testing library?
+# Before starting to apply TDD
 
-The core library, DOM Testing Library, is a light-weight solution for testing web pages by querying and interacting with DOM nodes (whether simulated with JSDOM/Jest or in the browser). The main utilities it provides involve querying the DOM for nodes in a way that's similar to how the user finds elements on the page. In this way, the library helps ensure your tests give you confidence that your application will work when a real user uses it.
+It is extremely important that you have requirements such as acceptance criteria or use cases, without them it will be very difficult to apply TDD in a way that creates value in development.
+
+If these processes have not matured in your work team, it is important that you raise your hand and convey the need to do so.
+
+Ultimately, you can define the criteria and validate them with the person who makes the final decisions in the development.
+
+## React testing library
+
+is a javascript testing utility for testing web pages, provides a virtual DOM for testing React components which we can use to interact with and verify the behaviour of a React component. With React testing  library, we are not concerned about the implementation details of a component
+
+**React testing library philosophy**: "The more your tests resemble the way your software is used, the more confidence they can give you "
+"Your test should resemble how users interact with your code as much as posible"
+
+## Jest 
+
+Jest is a javascript testing framework. Jest is a test runner that finds test,run the tests, and report the results.
 
 **Dependencies:**
 
@@ -58,22 +73,28 @@ test('renders learn react link', () => {
 
 ```
 
-## **Tools and Playgrounds**
+## TDD(Test Driven Development)
 
-* Testing Playground is an interactive sandbox where you can run different queries against your own html, and get visual feedback matching the rules mentioned above.
-<https://testing-playground.com/>
+Is a software development process where you write tests before writing the software code, once the test have been written, you then write the code to ensure the test passes.
 
-* Browser **extension** for generating queries for Testing Library.
+1. Create tests that describe the desired functionality
+2. Write software code to make the tests pass
+3. Refactor the code to make it cleaner while ensuring the tests still pass
 
-* GitHub copilot: write "it" and then ctrl + enter to see posible test suggestions.
+## Test Driven Development o Desarrollo dirigido por pruebas
 
-* Debug methods 
+<image src="../src/assets/images/tdd-flow.svg" width="400px" height="400px" />
 
-```js
-   // debug This method is essentially a shortcut for console.log(prettyDOM())
-    console.log(prettyDOM(h1Element))
-    screen.debug();
-    screen.logTestingPlaygroundURL()
-```
+Test Driven Development is a technique for developing software that consists of short cycle, in which you first write an automated test that fails, then do the minimum necessary to make it pass, and finally do a refactor.
 
-* CodiumAI estension (cmd + crtl + c) to generate test for you, or click the button "test this function" on the top of the function.
+Cycle <span style="color:red">Red</span>, <span style="color:green">Green</span>, <span style="color:blue">Refactor</span>
+The Red, Green, Refactor cycle is the essence of TDD and consists of:
+
+<span style="color:red">RED</span>: Start by creating an automated test that fails out of the box. Typically, a failed test is colored red in test runners.
+
+<span style="color:green">GREEN</span>: Do the minimum necessary for the test to pass. Usually, a test that passes has a green color in a test runner.
+
+<span style="color:blue">REFACTOR</span>: Apply refactor techniques and good practices in the code created so far. SOLID principles or others, for example.
+
+**NOTE**:
+tests should be considered as part of functionality development!

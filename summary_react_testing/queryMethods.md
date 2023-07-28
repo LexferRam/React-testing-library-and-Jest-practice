@@ -1,5 +1,6 @@
 # Query Methods
 
+Queries are the methods that testing-library provides to find elements in the DOM.
 ## **Screen**
 
 Is a way to interact with the component that is rendered in the virtual DOM of the test, provides a set of methods to find elements in the DOM.
@@ -26,6 +27,8 @@ getByLabelText
 getByPlaceholderText
 
 getByText
+
+getByDisplayValue
 
 2. **Semantic Queries**
 
@@ -100,4 +103,13 @@ retorna un arreglo con el resultado de la busqueda.
     );
     const h1Elements = screen.getAllByText(/todo/i);
     expect(h1Elements.length).toBe(1)
+```
+
+## Manual Queries
+
+you can use the regular querySelector DOM API to find elements. its not recommended to use this method because this attributes are not accesible by the user.
+
+```javascript
+    const { container } = render(<MyComponent />)
+    const foo = container.querySelector('[data-foo="bar"]')
 ```

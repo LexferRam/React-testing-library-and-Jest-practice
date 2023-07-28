@@ -1,4 +1,4 @@
-# FireEvent
+# USER INTERACTIONS (fireEvent / user-event)
 
 It allows simulating actions that the user performs on an element, such as clicking a button, writing text in a text field, selecting an element from a drop-down list, etc. your test should resemble how users interact with your code (component, page, etc.) as much as possible.
 
@@ -63,3 +63,50 @@ To wait for the removal of element(s) from the DOM you can use waitForElementToB
     )
 ```
 
+## **Difference between fireEvent and userEvent**
+
+The main difference between fireEvent and userEvent is that the latter implements the events more realistically, so it is recommended to use userEvent whenever possible.
+
+* **fireEvent:** is a method from RTL which is used to dispatch DOM events.
+* **userEvent:** is a library that contains a set of methods to simulate user interactions, simulates full interactions. e.g: wouldn't let a user click a hidden element or type in a disabled text box.
+
+
+```js
+    // fireEvent
+    fireEvent.change(inputElement, { target: { value: "Go Grocery Shopping" } });
+    fireEvent.click(buttonElement);
+
+    // userEvent
+    userEvent.type(inputElement, "Go Grocery Shopping");
+    userEvent.click(buttonElement);
+```
+
+example using userEvent:
+
+```js
+import user from "@testing-library/user-event";  
+
+test("test increment and decrement functions", async () => {
+    user.setup();
+    const incrementHandler = jest.fn();
+    const decrementHandler = jest.fn();
+
+    render(
+        <CounterTwo
+            count={0}
+            handleIncrement={incrementHandler}
+            handleDecrement={decrementHandler}
+        />
+    )
+
+    const incrementButton = screen.getByRole("button", { name: /increment/i });
+    const decrementButton = screen.getByRole("button", { name: /decrement/i });
+
+    await user.click(incrementButton)
+    await user.click(decrementButton) 
+
+    expect(incrementHandler).toHaveBeenCalledTimes(1)
+    expect(decrementHandler).toHaveBeenCalledTimes(1)
+})
+
+```
